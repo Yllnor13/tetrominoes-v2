@@ -1,4 +1,4 @@
-### Tetrominoes v2
+# Tetrominoes v2
 
 
 I watched the movie "tetris" and I thought that a tetris game where the UI is entirely in the terminal looked really endearing. I tried to make something similar in an earlier project, but due to a lack of planning ahead, I ended up making a lot of decisions that I would end up regretting down the line until I thought that the best choice was to start again with those mistakes in mind.
@@ -8,7 +8,7 @@ In this second attempt, I will make a plan and make requierments so that I can h
 
 ## Requierments
 
-# essential functional parts
+### essential functional parts
 
 1. The games user interface will be exclusively done through the terminal.
 
@@ -51,7 +51,7 @@ In this second attempt, I will make a plan and make requierments so that I can h
 
 7. you can see the next 3 tetrominoes that are to come
 
-# USER INTERFACE
+### USER INTERFACE
 
 The user interface will use square brackets and dots in the place of blocks and empty spaces
     a game should look like this 
@@ -103,7 +103,7 @@ The user interface will use square brackets and dots in the place of blocks and 
     <!====================!>
 
 
-### Terminology
+# Terminology
 
 Tetromino: Tetromino refers to the 7 block pieces that will be used to play the game.
 Tennis field: refers to the playing field in which the game takes place
