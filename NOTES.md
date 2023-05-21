@@ -29,5 +29,12 @@ tetromino size:
 
 ## TENNIS (?)
     
-    if I make a tennis class, I need to make an insert class for inserting tetrominoes that will always check if the tetromino that is getting inserted into that spot is about to hit another minomino
-    needs to run a test that checks if lines are stacked on every line
+    if I make a tennis class, I need to make...
+    
+     an insert class for inserting tetrominoes that will always check if the tetromino that is getting inserted into that spot is about to hit another minomino
+
+        make the insert function check if a block is out of bounds
+
+     needs to run a test that checks if blocks are stacked are stacked on every line when a block is placed (check if there is a row of inactive minominoes)
+
+    

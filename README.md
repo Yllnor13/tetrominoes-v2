@@ -18,30 +18,44 @@ In this second attempt, I will make a plan and make requierments so that I can h
     those being:
         it will have all 7 different tetrominoes
             O-Tetromino
+
                 [][]
                 [][]
+            
             L-Tetromino
+            
                 []
                 []
                 [][]
+            
             J-Tetromino
+            
                   []
                   []
                 [][]
+            
             Z-Tetromino
+            
                 [][]
                   [][]
+            
             I-Tetromino
+            
                 []
                 []
                 []
                 []
+            
             S-Tetromino
+            
                   [][]
                 [][]
+            
             T-Tetromino
+            
                   []
                 [][][]
+
 
     every tetromino is compromised of a minomino
 
@@ -62,7 +76,7 @@ In this second attempt, I will make a plan and make requierments so that I can h
 ### USER INTERFACE
 
 The user interface will use square brackets and dots in the place of blocks and empty spaces
-    a game should look like this:
+    it doesnt have to be exact, but a game should look something like this:
     
     example 1: emtpy field, no saved blocks
 
