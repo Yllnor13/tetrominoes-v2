@@ -1,10 +1,7 @@
 # Tetrominoes v2
 
 
-I watched the movie "tetris" and I thought that a tetris game where the UI is entirely in the terminal looked really endearing. I tried to make something similar in an earlier project, but due to a lack of planning ahead, I ended up making a lot of decisions that I would end up regretting down the line until I thought that the best choice was to start again with those mistakes in mind.
-
-
-In this second attempt, I will make a plan and make requierments so that I can have a clearer idea of what I need to do.
+A terminal-based Tetris game implementation with the essential functionalities, including all seven tetrominoes, rotation, saving blocks, and displaying upcoming tetrominoes. The game interface will use square brackets and dots to represent blocks and empty spaces. The objective is to clear lines by strategically placing the tetrominoes while ensuring the blocks do not reach the top of the tennis field. The game progressively increases the descent speed of the tetrominoes, providing a challenging experience. This project aims to recreate tetris so that it appears as it is depicted in the movie "tetris" when they show it running on elektronika machines
 
 ## Requierments
 
@@ -124,6 +121,13 @@ The user interface will use square brackets and dots in the place of blocks and 
     <![][][]. [][][][]. . !>
     <!====================!>
 
+
+# Why tetrominoes?
+
+I watched the movie "tetris" and I thought that a tetris game where the UI is entirely in the terminal looked really endearing. I tried to make something similar in an earlier project, but due to a lack of planning ahead, I ended up making a lot of decisions that I would end up regretting down the line until I thought that the best choice was to start again with those mistakes in mind.
+
+
+In this second attempt, I will make a plan and make requierments so that I can have a clearer idea of what I need to do.
 
 # Terminology
 
