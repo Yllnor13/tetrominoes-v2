@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Otetro implements Tetromino{
     private List<List<Minomino>> tetro;
+    public int width = 2;
 
     public Otetro(){
         List<Minomino> layer1 = new ArrayList<>();
@@ -15,6 +16,16 @@ public class Otetro implements Tetromino{
         oblock.add(layer1);
         
         tetro = oblock;
+    }
+
+    @Override
+    public void debugPrint(){
+        for(List<Minomino> minolist : tetro){
+            for(Minomino mino : minolist){
+                System.out.print(mino.getSymbol());
+            }
+            System.out.print("\n");
+        }
     }
 
     @Override

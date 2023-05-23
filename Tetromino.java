@@ -6,4 +6,5 @@ public interface Tetromino {
     public List<List<Minomino>> returnTetro();
     public void rotate();
     public void setActive();
+    public void debugPrint();
 }
