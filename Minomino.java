@@ -21,6 +21,10 @@ public class Minomino {
         isFull = false;
     }
 
+    public void draw(){
+        isFull = true;
+    }
+
     public String getSymbol() {
         return isFull ? symbol : ". ";
     }

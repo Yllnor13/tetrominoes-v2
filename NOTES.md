@@ -37,4 +37,6 @@ tetromino size:
 
      needs to run a test that checks if blocks are stacked are stacked on every line when a block is placed (check if there is a row of inactive minominoes)
 
+     turns out, making a minomino in tennis be equal ("=") to a minomino in a tetromino just makes it so that the tetromino also gets erased when the erase function at the start of the insert method gets called
+
     
