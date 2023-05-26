@@ -8,6 +8,7 @@ public class Tennis {
     private Minomino[][] prevField;
     private int prevX;
     private int prevY;
+    private Tetromino prevTetro;
 
     private ArrayList<Minomino[][]> prevFields; //might not need
 
@@ -20,7 +21,7 @@ public class Tennis {
         }
     }
 
-    public void lineClear(){
+    public synchronized void lineClear(){
         //TODO: make a method that goes through every line and checks if it should line clear
         //then make everything above it go down one line
         //order should be: Line clear->line above goes down
@@ -41,9 +42,10 @@ public class Tennis {
         }
     }
 
-    public Boolean insert(Tetromino tetromino, int x, int y){
+    public synchronized Boolean insert(Tetromino tetromino, int x, int y){
         //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
         prevField = field;
+        prevTetro = tetromino;
         prevX = x;
         prevY = y;
         //prevFields.add(prevField);
@@ -116,7 +118,7 @@ public class Tennis {
         return true;
     }
 
-    public void drawField(){
+    public synchronized void drawField(){
         // Loop through each row of the field and print each Cube
         
         System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -131,7 +133,7 @@ public class Tennis {
         System.out.print("<!====================!>");
     }
 
-    public Minomino[][] getPrevField(){
+    public synchronized Minomino[][] getPrevField(){
         return prevField;
     }
 
@@ -139,11 +141,15 @@ public class Tennis {
         return prevFields;
     }
 
-    public int getPrevX(){
+    public synchronized int getPrevX(){
         return prevX;
     }
 
-    public int getPrevY(){
+    public synchronized int getPrevY(){
         return prevY;
+    }
+
+    public synchronized Tetromino getPrevTetro(){
+        return prevTetro;
     }
 }
