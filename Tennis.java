@@ -8,6 +8,10 @@ public class Tennis {
     private Minomino[][] prevField;
     private ArrayList<Minomino[][]> prevFields;
 
+    private int prevX;
+    private int prevY;
+    private Tetromino prevTetro;
+
     public Tennis() {
         // Initialize the playing field with empty cubes
         for (int i = 0; i < HEIGHT; i++) {
@@ -42,6 +46,9 @@ public class Tennis {
         //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
         prevField = field;
         //prevFields.add(prevField);
+        prevX = x;
+        prevY = y;
+        prevTetro = tetromino;
 
         //erases the previous tetromino in play before drawing it again
         for(Minomino[] minoList : field){
@@ -120,5 +127,17 @@ public class Tennis {
 
     public ArrayList<Minomino[][]> getHistory(){
         return prevFields;
+    }
+
+    public int getPrevX() {
+        return prevX;
+    }
+
+    public int getPrevY() {
+        return prevY;
+    }
+
+    public Tetromino getPrevTetro() {
+        return prevTetro;
     }
 }
