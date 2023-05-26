@@ -20,14 +20,17 @@ public class Main {
         int x = random.nextInt(9);
         int y = 0;
         
-        while (y < 19) {
-            System.out.println(x);
-            System.out.println(y);
+        while (y < 24) {
 
-            x = random.nextInt(9);
+            x = random.nextInt(13);
             
             field.drawField();
             field.insert(square, x, y);
+            field.drawField();
+            field.insert(square, -5, y);
+            field.drawField();
+            field.insert(square, 13, y);
+
             y++;
         
             try {

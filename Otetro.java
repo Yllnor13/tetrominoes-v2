@@ -3,7 +3,8 @@ import java.util.List;
 
 public class Otetro implements Tetromino{
     private List<List<Minomino>> tetro;
-    public int width = 2;
+    private int width = 2;
+    private int height = 2;
 
     public Otetro(){
         List<Minomino> layer1 = new ArrayList<>();
@@ -18,6 +19,14 @@ public class Otetro implements Tetromino{
         tetro = oblock;
     }
 
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
     @Override
     public void debugPrint(){
         for(List<Minomino> minolist : tetro){
@@ -30,14 +39,12 @@ public class Otetro implements Tetromino{
 
     @Override
     public List<List<Minomino>> returnTetro() {
-        // TODO Auto-generated method stub
-
         return tetro;
     }
 
     @Override
     public void rotate() {
-        // TODO make a rotate method for each rotation
+        // TODO make a rotate method for each rotation. This one doesnt need to rotate
     }
 
     @Override
@@ -47,8 +54,6 @@ public class Otetro implements Tetromino{
                 mino.settle();
             }
         }
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setActive'");
     }
     
 }
