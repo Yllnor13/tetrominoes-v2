@@ -121,7 +121,7 @@ public class Tennis {
     public synchronized void drawField(){
         // Loop through each row of the field and print each Cube
         
-        System.out.println("\n\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         for (int i = 0; i < HEIGHT; i++) {
             System.out.print("<!");
             for (int j = 0; j < WIDTH; j++) {
@@ -151,5 +151,9 @@ public class Tennis {
 
     public synchronized Tetromino getPrevTetro(){
         return prevTetro;
+    }
+
+    public void addPrevTetro(Tetromino t) {
+        prevTetro = t;
     }
 }
