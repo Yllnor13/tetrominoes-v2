@@ -45,7 +45,6 @@ class UserInputThread extends Thread{
             String userInput = "";
             while (!userInput.equalsIgnoreCase("quit")) {
                 currentX = tennis.getPrevX();
-                currentY = tennis.getPrevY();
                 currentTetro = tennis.getPrevTetro();
                 userInput = scanner.nextLine().toLowerCase();
                 
@@ -53,15 +52,18 @@ class UserInputThread extends Thread{
                     switch (userInput.toLowerCase()) {
                         case "a":
                             currentX--;
+                            currentY = tennis.getPrevY();
                             tennis.insert(currentTetro, currentX, currentY);
                             tennis.drawField();
                             break;
                         case "d":
                             currentX++;
+                            currentY = tennis.getPrevY();
                             tennis.insert(currentTetro, currentX, currentY);
                             tennis.drawField();
                             break;
                         case "s":
+                            currentY = tennis.getPrevY();
                             currentY++;
                             if(tennis.insert(currentTetro, currentX, currentY)){
                                 tennis.insert(currentTetro, currentX, currentY);
@@ -75,6 +77,8 @@ class UserInputThread extends Thread{
                             break;
                         case "r":
                             currentTetro.rotate();
+                            currentY = tennis.getPrevY();
+                            currentX = tennis.getPrevX();
                             tennis.insert(currentTetro, currentX, currentY);
                             tennis.drawField();
                             break;
