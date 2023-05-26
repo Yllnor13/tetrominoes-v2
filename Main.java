@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        //String userinput = scanner.nextLine();
+        String userinput = scanner.nextLine();
 
         Random random = new Random();
 
@@ -53,5 +53,52 @@ public class Main {
                 */
             }
         }, intervalInSeconds, intervalInSeconds);
+    }
+
+    class UpdateTennisThread extends Thread{
+        private Tennis tennis;
+        private long time;
+        private int currentX;
+        private int currentY;
+        private Tetromino currentTetro;
+
+        public UpdateTennisThread(Tennis ten, int x, int y, Tetromino tet){
+            tennis = ten;
+            time = 5000;
+            currentX = x;
+            currentY = y;
+            currentTetro = tet;
+        }
+
+        public void updateTetro(Tetromino t){
+            currentTetro = t;
+        }
+
+        public void updateX(int x){
+            currentX = x;
+        }
+
+        public void updateY(int y){
+            currentY = y;
+        }
+
+        @Override
+        public void run(){
+            try{
+                while (time >= 500){
+                    Thread.sleep(time);
+
+                    updateX(tennis.getPrevX());
+                    updateY(tennis.getPrevY());
+                    currentY--;
+
+                    tennis.insert(null, currentX, currentY);
+
+                    time = time-10;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

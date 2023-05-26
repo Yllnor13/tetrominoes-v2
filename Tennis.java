@@ -6,7 +6,10 @@ public class Tennis {
     public final int HEIGHT = 20;
     private Minomino[][] field = new Minomino[HEIGHT][WIDTH];
     private Minomino[][] prevField;
-    private ArrayList<Minomino[][]> prevFields;
+    private int prevX;
+    private int prevY;
+
+    private ArrayList<Minomino[][]> prevFields; //might not need
 
     public Tennis() {
         // Initialize the playing field with empty cubes
@@ -38,9 +41,11 @@ public class Tennis {
         }
     }
 
-    public void insert(Tetromino tetromino, int x, int y){
+    public Boolean insert(Tetromino tetromino, int x, int y){
         //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
         prevField = field;
+        prevX = x;
+        prevY = y;
         //prevFields.add(prevField);
 
         //erases the previous tetromino in play before drawing it again
@@ -62,17 +67,27 @@ public class Tennis {
                 if(tetrominoX + tetromino.getWidth() > WIDTH+1){
                     tetrominoX = WIDTH - tetromino.getWidth();
                     insert(tetromino, tetrominoX, tetrominoY);
+                    return true;
                 }
 
                 else if(tetrominoX < 0){
                     tetrominoX = 0;
                     insert(tetromino, tetrominoX, tetrominoY);
+                    return true;
                 }
 
                 //if it goes below the field somehow
                 else if(tetrominoY + tetromino.getHeight() > HEIGHT+1){
                     tetrominoY= HEIGHT - tetromino.getHeight();
                     insert(tetromino, tetrominoX, tetrominoY);
+                    for(Minomino[] minoList2 : field){
+                        for(Minomino mino2 : minoList2){
+                            if(mino2.getActive()){
+                                mino2.settle();
+                            }
+                        }
+                    }
+                    return false;
                 }
                 
                 //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
@@ -92,11 +107,13 @@ public class Tennis {
                         }
                     }
                     tetrominoY--;
+                    return false;
                 }
             }
             tetrominoX = x;
             tetrominoY++;
         }
+        return true;
     }
 
     public void drawField(){
@@ -118,7 +135,15 @@ public class Tennis {
         return prevField;
     }
 
-    public ArrayList<Minomino[][]> getHistory(){
+    public ArrayList<Minomino[][]> getHistory(){ //might not be used
         return prevFields;
+    }
+
+    public int getPrevX(){
+        return prevX;
+    }
+
+    public int getPrevY(){
+        return prevY;
     }
 }
