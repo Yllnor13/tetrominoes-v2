@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tennis {
     public final int WIDTH = 10;
     public final int HEIGHT = 20;
     private Minomino[][] field = new Minomino[HEIGHT][WIDTH];
+    private Minomino[][] prevField;
+    private ArrayList<Minomino[][]> prevFields;
 
     public Tennis() {
         // Initialize the playing field with empty cubes
@@ -36,6 +39,10 @@ public class Tennis {
     }
 
     public void insert(Tetromino tetromino, int x, int y){
+        //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
+        prevField = field;
+        //prevFields.add(prevField);
+
         //erases the previous tetromino in play before drawing it again
         for(Minomino[] minoList : field){
             for(Minomino mino : minoList){
@@ -45,16 +52,47 @@ public class Tennis {
             }
         }
         //TODO: adds the tetromino at the specified coordinates
-        //should also check if its an active minomino or not in htere
 
         int tetrominoX = x;
         int tetrominoY = y;
 
         for (List<Minomino> minoList : tetromino.returnTetro()) {
             for (Minomino mino : minoList) {
+                //if it tried to go out of bounds to the right or left
+                if(tetrominoX + tetromino.getWidth() > WIDTH+1){
+                    tetrominoX = WIDTH - tetromino.getWidth();
+                    insert(tetromino, tetrominoX, tetrominoY);
+                }
+
+                else if(tetrominoX < 0){
+                    tetrominoX = 0;
+                    insert(tetromino, tetrominoX, tetrominoY);
+                }
+
+                //if it goes below the field somehow
+                else if(tetrominoY + tetromino.getHeight() > HEIGHT+1){
+                    tetrominoY= HEIGHT - tetromino.getHeight();
+                    insert(tetromino, tetrominoX, tetrominoY);
+                }
+                
                 //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
-                field[tetrominoY][tetrominoX] = new Minomino(true);
-                tetrominoX++;
+                else if(field[tetrominoY][tetrominoX].getIsFull() == false){
+                    field[tetrominoY][tetrominoX] = new Minomino(true);
+                    tetrominoX++;
+                }
+                
+                //if the tetromino tries to insert itself at a place that has a settled tetromino
+                else{
+                    field = prevField;
+                    for(Minomino[] minoList2 : field){
+                        for(Minomino mino2 : minoList2){
+                            if(mino2.getActive() == true){
+                                mino.settle();
+                            }
+                        }
+                    }
+                    tetrominoY--;
+                }
             }
             tetrominoX = x;
             tetrominoY++;
@@ -74,5 +112,13 @@ public class Tennis {
             System.out.println(); // move to the next row
         }
         System.out.print("<!====================!>");
+    }
+
+    public Minomino[][] getPrevField(){
+        return prevField;
+    }
+
+    public ArrayList<Minomino[][]> getHistory(){
+        return prevFields;
     }
 }

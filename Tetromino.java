@@ -7,4 +7,6 @@ public interface Tetromino {
     public void rotate();
     public void setActive();
     public void debugPrint();
+    public int getWidth();
+    public int getHeight();
 }

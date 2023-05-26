@@ -7,13 +7,18 @@ tetromino size:
         but if I want to make them rotate programattically
         in the inner 2x2 square I make it so that 1 goes down, one goes right one goes up and one goes up and one goes left
         in the outer 4x4 square, make it so that 4 steps have to be taken
-            if cormer->go down/
+            if corner->go down/
 
     tetromino in play will need to check if its touching the pile cube at the bottom, so I should make
     it so that every cube has its own ID, or just make it so tha cubes have an active/inactive tag and run
     an if check if its touching that
 
     code everything in one file(?)
+
+    when the tetrominoes rotate and they hit something, I need to figure out a way so that the damn thing doesnt just revert back to its previous state and then saves
+        make it so that it goes to the top of whatever it rotated into? sounds cool and unique
+
+        need to add a history meter so that I can go back until it reaches the top of whatever it was in
 
 ## MAIN
     
