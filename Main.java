@@ -9,42 +9,53 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         //String userinput = scanner.nextLine();
         Random random = new Random();
-        Tetromino currentTetro;
-        
+        Tetromino currentTetro = new Stetro();
+        Tetromino currentTetro2 = new Otetro();
 
+        currentTetro2.setActive();
+
+        currentTetro.debugPrint();
+
+        currentTetro.rotate();
+
+        currentTetro.debugPrint();
+
+        currentTetro.rotate();
+
+        currentTetro.debugPrint();
+
+        
         Tennis tennis = new Tennis();
         int currentX;
         int currentY;
         String userInput = "";
-        while (!userInput.equalsIgnoreCase("quit")) {
-            currentX = tennis.getPrevX();
-            currentY = tennis.getPrevY();
-            currentTetro = tennis.getPrevTetro();
-            userInput = scanner.nextLine().toLowerCase();
 
-            switch (userInput) {
-                case "a":
-                    currentX--;
-                    tennis.insert(currentTetro, currentX, currentY);
-                    break;
-                case "d":
-                    currentX++;
-                    tennis.insert(currentTetro, currentX, currentY);
-                    break;
-                case "s":
-                    currentY++;
-                    tennis.insert(currentTetro, currentX, currentY);
-                case "x":
-                    currentY = tennis.HEIGHT;
-                    tennis.insert(currentTetro, currentX, currentY);
-                    break;
-                case "r":
-                    currentTetro.rotate();
-                    tennis.insert(currentTetro, currentX, currentY);
-                default:
-                    // Handle unknown command or invalid input
-                    System.out.println("Unknown command: " + userInput);
-                    break;
+        
+        int x = 0;
+        int y = 15;
+
+        while(tennis.insert(currentTetro, x, y) == true){
+            y++;
+            tennis.insert(currentTetro, x, y);
+            tennis.drawField();
+            try{
+                Thread.sleep(500);
+            }catch(Exception e){
+                System.out.println("shit happens");
+            }
+        }
+
+        y=14;
+        Tetromino newTetro = new Otetro();
+
+        while(tennis.insert(newTetro, x, y) == true){
+            tennis.insert(newTetro, x, y);
+            y++;
+            tennis.drawField();
+            try{
+                Thread.sleep(500);
+            }catch(Exception e){
+                System.out.println("shit happens");
             }
         }
     }
