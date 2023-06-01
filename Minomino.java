@@ -14,7 +14,7 @@ public class Minomino {
     }
 
     public void settle(){
-        active = !active;
+        active = false;
     }
 
     public void erase(){
