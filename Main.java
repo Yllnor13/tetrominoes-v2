@@ -111,7 +111,7 @@ class UpdateTennisThread extends Thread{
 
     public UpdateTennisThread(Tennis ten){
         tennis = ten;
-        time = 5000;
+        time = 1000;
     }
 
     public void updateTetro(Tetromino t){
