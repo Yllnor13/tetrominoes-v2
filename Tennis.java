@@ -40,6 +40,16 @@ public class Tennis {
             }
             i++;
         }
+        for(int x = HEIGHT-1; x>0;x--){
+            if(x==0){
+                for(Minomino mino : field[x]){
+                    mino.erase();
+                    mino.settle();
+                }
+            }else{
+                field[x] = field[x-1];
+            }
+        }
     }
 
     public Boolean insert(Tetromino tetromino, int x, int y){
@@ -146,7 +156,7 @@ public class Tennis {
                 }
 
                 //if it goes below the field somehow
-                if(tetrominoY + tetromino.getHeight() > HEIGHT+1){
+                if(prevY + tetromino.getHeight() > HEIGHT){
                     tetrominoY = HEIGHT - tetromino.getHeight();
                     insert(tetromino, tetrominoX, tetrominoY);
                     for(Minomino[] minoList2 : field){
@@ -164,9 +174,8 @@ public class Tennis {
                 //if the tetromino tries to insert itself at a place that has a settled tetromino
                 else if (field[tetrominoY][tetrominoX].getIsFull() == true && field[tetrominoY][tetrominoX].getActive() == false){
                     field = prevField;
-                    tetrominoY = tetrominoY - tetromino.getHeight();
-                    tetrominoY--;
-                    insert(tetromino, tetrominoX, tetrominoY);
+                    prevY = prevY - tetromino.getHeight()+1;
+                    insert(tetromino, prevX, prevY);
                     for(Minomino[] minoList2 : field){
                         for(Minomino mino2 : minoList2){
                             if(mino2.getActive() == true){
@@ -179,8 +188,11 @@ public class Tennis {
                 
                 //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
                 else if(field[tetrominoY][tetrominoX].getIsFull() == false){
-                    if(mino != null){
+                    if(mino.getIsFull()){
                         field[tetrominoY][tetrominoX] = new Minomino(true);
+                    }
+                    else{
+                        field[tetrominoY][tetrominoX] = new Minomino(false);
                     }
                     tetrominoX++;
                 }

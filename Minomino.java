@@ -17,6 +17,10 @@ public class Minomino {
         active = false;
     }
 
+    public void activate(){
+        active = true;
+    }
+
     public void erase(){
         isFull = false;
     }
