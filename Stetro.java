@@ -13,7 +13,7 @@ public class Stetro implements Tetromino {
         List<Minomino> layer1 = new ArrayList<>(3);
         List<Minomino> layer2 = new ArrayList<>(3);
 
-        layer1.add(null);
+        layer1.add(new Minomino(false));
         layer1.add(new Minomino(true));
         layer1.add(new Minomino(true));
 
@@ -47,7 +47,7 @@ public class Stetro implements Tetromino {
             layer2.add(new Minomino(true));
             layer2.add(new Minomino(true));
             
-            layer3.add(null);
+            layer3.add(new Minomino(false));
             layer3.add(new Minomino(true));
 
             sblock.add(layer1);
@@ -66,7 +66,7 @@ public class Stetro implements Tetromino {
             List<Minomino> layer1 = new ArrayList<>(width);
             List<Minomino> layer2 = new ArrayList<>(width);
                         
-            layer1.add(null);
+            layer1.add(new Minomino(false));
             layer1.add(new Minomino(true));
             layer1.add(new Minomino(true));
 

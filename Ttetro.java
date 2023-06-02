@@ -9,13 +9,14 @@ public class Ttetro implements Tetromino {
     
     public Ttetro(){
         List<Minomino> layer1 = new ArrayList<>();
-        Minomino m1 = new Minomino(true);
-        layer1.add(1, m1);
         List<Minomino> layer2 = new ArrayList<>();
-        layer2.add(0, m1);
-        layer2.add(1, m1);
-        layer2.add(2, m1);
         List<List<Minomino>> tblock = new ArrayList<>();
+
+        layer1.add(new Minomino(false));
+        layer1.add(new Minomino(true));
+        layer2.add(new Minomino(true));
+        layer2.add(new Minomino(true));
+        layer2.add(new Minomino(true));
         tblock.add(layer1);
         tblock.add(layer2);
         tetro = tblock;
@@ -29,16 +30,15 @@ public class Ttetro implements Tetromino {
     @Override
     public void rotate() { //rotates clockwise
         List<List<Minomino>> tblock = new ArrayList<>();
-        Minomino m1 = new Minomino(true);
         
         if(orientation == 0){ //turn 90 degrees clockwise
             List<Minomino> layer1 = new ArrayList<>();
             List<Minomino> layer2 = new ArrayList<>();
             List<Minomino> layer3 = new ArrayList<>();
-            layer1.add(m1);
-            layer2.add(m1);
-            layer2.add(m1);
-            layer3.add(m1);
+            layer1.add(new Minomino(true));
+            layer2.add(new Minomino(true));
+            layer2.add(new Minomino(true));
+            layer3.add(new Minomino(true));
             tblock.add(layer1);
             tblock.add(layer2);
             tblock.add(layer3);
@@ -51,11 +51,12 @@ public class Ttetro implements Tetromino {
         }
         else if(orientation == 1){ //180 degrees, just the init with opposite adds on the layer
             List<Minomino> layer1 = new ArrayList<>();
-            layer1.add(1, m1);
+            layer1.add(new Minomino(false));
+            layer1.add(new Minomino(true));
             List<Minomino> layer2 = new ArrayList<>();
-            layer2.add(0, m1);
-            layer2.add(1, m1);
-            layer2.add(2, m1);
+            layer2.add(new Minomino(true));
+            layer2.add(new Minomino(true));
+            layer2.add(new Minomino(true));
             tblock.add(layer2);
             tblock.add(layer1);
             tetro = tblock;
@@ -69,10 +70,12 @@ public class Ttetro implements Tetromino {
             List<Minomino> layer1 = new ArrayList<>();
             List<Minomino> layer2 = new ArrayList<>();
             List<Minomino> layer3 = new ArrayList<>();
-            layer1.add(1, m1);
-            layer2.add(m1);
-            layer2.add(m1);
-            layer3.add(1, m1);
+            layer1.add(new Minomino(false));
+            layer1.add(new Minomino(true));
+            layer2.add(new Minomino(true));
+            layer2.add(new Minomino(true));
+            layer3.add(new Minomino(false));
+            layer3.add(new Minomino(true));
             tblock.add(layer1);
             tblock.add(layer2);
             tblock.add(layer3);
@@ -85,11 +88,12 @@ public class Ttetro implements Tetromino {
         }
         else{ //return to normal
             List<Minomino> layer1 = new ArrayList<>();
-            layer1.add(1, m1);
+            layer1.add(new Minomino(false));
+            layer1.add(new Minomino(true));
             List<Minomino> layer2 = new ArrayList<>();
-            layer2.add(0, m1);
-            layer2.add(1, m1);
-            layer2.add(2, m1);
+            layer2.add(new Minomino(true));
+            layer2.add(new Minomino(true));
+            layer2.add(new Minomino(true));
             tblock.add(layer1);
             tblock.add(layer2);
             tetro = tblock;
