@@ -3,7 +3,21 @@
 
 A terminal-based Tetris game implementation with the essential functionalities, including all seven tetrominoes, rotation, saving blocks, and displaying upcoming tetrominoes. The game interface will use square brackets and dots to represent blocks and empty spaces. The objective is to clear lines by strategically placing the tetrominoes while ensuring the blocks do not reach the top of the tennis field. The game progressively increases the descent speed of the tetrominoes, providing a challenging experience. This project aims to recreate tetris so that it appears as it is depicted in the movie "tetris" when they show it running on elektronika machines
 
-## Requierments
+## How to play
+
+### install guide
+
+all you need to do to run the game is to have java installed and to compile the code before running Main.java on the terminal.
+
+### Controls
+
+    A,D: move the tetromino left to right
+    R: rotates the tetromino
+    S: pushes the tetromino one minomino down
+    X: pushes the tetromino all the way down
+    "quit": quits the game
+
+## Requierments (for the developer)
 
 ### essential functional parts
 
