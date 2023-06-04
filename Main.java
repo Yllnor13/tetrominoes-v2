@@ -5,11 +5,10 @@ public class Main {
 
     public static void main(String[] args){
         //shared objects
-        Random random = new Random();
         Tetromino currentTetro = new Itetro();
         Tetromino currentTetro2 = new Otetro();
 
-        Tetromino square = new Otetro();
+        Tetromino square = new Ttetro();
         Tennis tennis = new Tennis();
         tennis.addPrevTetro(square);
 
@@ -46,22 +45,26 @@ class UserInputThread extends Thread{
         try{
             String userInput = "";
             while (!userInput.equalsIgnoreCase("quit")) {
-                currentX = tennis.getPrevX();
-                currentTetro = tennis.getPrevTetro();
                 userInput = scanner.nextLine().toLowerCase();
                 
                 synchronized(tennis){
+                    currentX = tennis.getPrevX();
+                    currentTetro = tennis.getPrevTetro();
                     switch (userInput.toLowerCase()) {
                         case "a":
                             currentX--;
                             currentY = tennis.getPrevY();
-                            tennis.insert(currentTetro, currentX, currentY);
+                            if(tennis.insert(currentTetro, currentX, currentY)){
+                                tennis.insert(currentTetro, currentX, currentY);
+                            }
                             tennis.drawField();
                             break;
                         case "d":
                             currentX++;
                             currentY = tennis.getPrevY();
-                            tennis.insert(currentTetro, currentX, currentY);
+                            if(tennis.insert(currentTetro, currentX, currentY)){
+                                tennis.insert(currentTetro, currentX, currentY);
+                            }
                             tennis.drawField();
                             break;
                         case "s":
@@ -74,7 +77,9 @@ class UserInputThread extends Thread{
                             break;
                         case "x":
                             currentY = tennis.HEIGHT;
-                            tennis.insert(currentTetro, currentX, currentY);
+                            if(tennis.insert(currentTetro, currentX, currentY)){
+                                tennis.insert(currentTetro, currentX, currentY);
+                            }
                             tennis.drawField();
                             break;
                         case "r":
@@ -133,14 +138,17 @@ class UpdateTennisThread extends Thread{
         try{
             while (time >= 500){
                 Thread.sleep(time);
-
-                updateX(tennis.getPrevX());
-                updateY(tennis.getPrevY());
-                updateTetro(tennis.getPrevTetro());
                 synchronized(tennis){
+                    updateX(tennis.getPrevX());
+                    updateY(tennis.getPrevY());
+                    updateTetro(tennis.getPrevTetro());
                     if (!tennis.insert(currentTetro, currentX, currentY)) {
                         // handle if the tetromino cannot be inserted anymore (it reached the bottom or other tetrominos)
-                        // like getting a new random tetromino and resetting currentX and currentY to initial values
+                        // like getting a new random tetrominso and resetting currentX and currentY to initial values
+                        updateX(5);
+                        updateY(0);
+                        updateTetro(tennis.getNewTet());
+                        tennis.insert(currentTetro, currentX, currentY);
                     }
                     else{
                         tennis.insert(currentTetro, currentX, (currentY+1));

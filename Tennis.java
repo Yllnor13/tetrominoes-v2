@@ -1,15 +1,13 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Tennis {
     public final int WIDTH = 10;
     public final int HEIGHT = 20;
     public Minomino[][] field = new Minomino[HEIGHT][WIDTH];
     private Minomino[][] prevField;
-    private int prevX;
-    private int prevY;
-    private Tetromino prevTetro;
 
     private ArrayList<Minomino[][]> prevFields; //might not need
 
@@ -64,10 +62,7 @@ public class Tennis {
                     j++;
                 }
             }
-            System.out.println("this is j:" + j);
             if (j == minoList.length) {
-                System.out.println("this is i" + i);
-                System.out.println("THE REQUIERMENTS ARE MET");
                 for (Minomino mino : minoList) {
                     mino.erase();
                 }
@@ -195,6 +190,32 @@ public class Tennis {
             System.out.println(); // move to the next row
         }
         System.out.print("<!====================!>");
+    }
+
+    //made most sense to have this here since tennis is synchronized in main for both user and computer thread
+    public Tetromino getNewTet(){
+        Random random = new Random();
+        int newtet = random.nextInt(7);
+        Tetromino tetro;
+
+        switch(newtet){
+            case 0:
+                return tetro = new Otetro();
+            case 1:
+                return tetro = new Itetro();
+            case 2:
+                return tetro = new Ttetro();
+            case 3:
+                return tetro = new Ltetro();
+            case 4:
+                return tetro = new Jtetro();
+            case 5:
+                return tetro = new Stetro();
+            case 6:
+                return tetro = new Ztetro();
+            default:
+                return tetro = new Otetro(); //so that the method can work
+        }
     }
 
     public synchronized Minomino[][] getPrevField(){
