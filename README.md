@@ -124,7 +124,7 @@ The user interface will use square brackets and dots in the place of blocks and 
 
 # Why tetrominoes?
 
-I watched the movie "tetris" and I thought that a tetris game where the UI is entirely in the terminal looked really endearing. I tried to make something similar in an earlier project, but due to a lack of planning ahead, I ended up making a lot of decisions that I would end up regretting down the line until I thought that the best choice was to start again with those mistakes in mind.
+I watched the movie "tetris" and I thought that a tetris game where the UI is entirely in the terminal looked really endearing. I looked online to see if anyone had made it yet, but alas, there were no examples that were made for the terminal that I could find. I tried to make something similar in an earlier project, but due to a lack of planning ahead, I ended up making a lot of decisions that I would end up regretting down the line until I thought that the best choice was to start again with those mistakes in mind.
 
 
 In this second attempt, I will make a plan and make requierments so that I can have a clearer idea of what I need to do.
