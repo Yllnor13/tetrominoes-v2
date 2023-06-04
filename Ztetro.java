@@ -1,29 +1,29 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stetro implements Tetromino {
+public class Ztetro implements Tetromino{
     private List<List<Minomino>> tetro;
     private int width = 3;
     private int height = 2;
     private boolean orientation = true;
 
-    public Stetro(){
-        List<List<Minomino>> sblock = new ArrayList<>();
+    public Ztetro(){
+        List<List<Minomino>> zblock = new ArrayList<>();
 
         List<Minomino> layer1 = new ArrayList<>(3);
         List<Minomino> layer2 = new ArrayList<>(3);
 
-        layer1.add(new Minomino(false));
         layer1.add(new Minomino(true));
         layer1.add(new Minomino(true));
-
+        
+        layer2.add(new Minomino(false));
         layer2.add(new Minomino(true));
         layer2.add(new Minomino(true));
 
-        sblock.add(layer1);
-        sblock.add(layer2);
+        zblock.add(layer1);
+        zblock.add(layer2);
 
-        tetro = sblock;
+        tetro = zblock;
     }
 
     @Override
@@ -32,8 +32,8 @@ public class Stetro implements Tetromino {
     }
 
     @Override
-    public void rotate() { //S when flipped 180 is the same as when 0 degrees, same for 90 and 270
-        List<List<Minomino>> sblock = new ArrayList<>();
+    public void rotate() {
+        List<List<Minomino>> zblock = new ArrayList<>();
 
         if(orientation){
             height = 3;
@@ -42,19 +42,19 @@ public class Stetro implements Tetromino {
             List<Minomino> layer2 = new ArrayList<>(width);
             List<Minomino> layer3 = new ArrayList<>(width);
 
+            layer1.add(new Minomino(false));
             layer1.add(new Minomino(true));
             
             layer2.add(new Minomino(true));
             layer2.add(new Minomino(true));
             
-            layer3.add(new Minomino(false));
             layer3.add(new Minomino(true));
 
-            sblock.add(layer1);
-            sblock.add(layer2);
-            sblock.add(layer3);
+            zblock.add(layer1);
+            zblock.add(layer2);
+            zblock.add(layer3);
 
-            tetro = sblock;
+            tetro = zblock;
         }
         else{
             height = 2;
@@ -67,13 +67,14 @@ public class Stetro implements Tetromino {
             layer1.add(new Minomino(true));
             layer1.add(new Minomino(true));
 
+            layer2.add(new Minomino(false));
             layer2.add(new Minomino(true));
             layer2.add(new Minomino(true));
 
-            sblock.add(layer1);
-            sblock.add(layer2);
+            zblock.add(layer1);
+            zblock.add(layer2);
 
-            tetro = sblock;;
+            tetro = zblock;;
         }
         orientation=!orientation;
     }
@@ -104,11 +105,14 @@ public class Stetro implements Tetromino {
 
     @Override
     public int getWidth() {
-        return width;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getWidth'");
     }
 
     @Override
     public int getHeight() {
-        return height;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHeight'");
     }
+    
 }

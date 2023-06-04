@@ -70,14 +70,26 @@ public class Itetro implements Tetromino {
 
     @Override
     public void setActive() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setActive'");
+        for(List<Minomino> list : tetro){
+            for(Minomino mino : list){
+                mino.settle();
+            }
+        }
     }
 
     @Override
     public void debugPrint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'debugPrint'");
+        for(List<Minomino> minolist : tetro){
+            for(int x=0;x<minolist.size();x++){
+                if(!minolist.get(x).getIsFull()){
+                    System.out.print(". ");
+                }
+                else{
+                    System.out.print(minolist.get(x).getSymbol());
+                }
+            }
+            System.out.print("\n");
+        }
     }
 
     @Override
