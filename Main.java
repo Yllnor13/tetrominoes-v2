@@ -74,9 +74,19 @@ class UserInputThread extends Thread{
                             inserter();
                             break;
                         case "x":
-                            currentY = tennis.HEIGHT;
-                            inserter();
-                            break;
+                            for(int x = tennis.getPrevY(); x<tennis.HEIGHT;x++){
+                                currentY = x;
+                                if(tennis.insert(currentTetro, currentX, currentY)){
+                                    tennis.insert(currentTetro, currentX, currentY);
+                                    tennis.drawField();
+                                }
+                                else{
+                                    currentTetro = tennis.getNewTet();
+                                    tennis.insert(currentTetro, 5, 0);
+                                    tennis.drawField();
+                                    break;
+                                }
+                            }
                         case "r":
                             currentTetro.rotate();
                             currentY = tennis.getPrevY();
@@ -138,22 +148,29 @@ class UpdateTennisThread extends Thread{
         tennis.drawField();
     }
 
-    @Override
-    public void run(){
+    public void passTime(){
         try{
-            while (time >= 500){
-                Thread.sleep(time);
-                synchronized(tennis){
-                    updateX(tennis.getPrevX());
-                    updateY(tennis.getPrevY());
-                    currentY++;
-                    updateTetro(tennis.getPrevTetro());
-                    inserter();
-                }
-                time = time-10;
-            }
+            Thread.sleep(time);
+            synchronized(tennis){
+            updateX(tennis.getPrevX());
+            updateY(tennis.getPrevY());
+            currentY++;
+            updateTetro(tennis.getPrevTetro());
+            inserter();
+        }
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run(){
+        while (time > 200){
+            passTime();
+            time = time-10;
+        }
+        if (time >100){
+            passTime();
         }
     }
 }
