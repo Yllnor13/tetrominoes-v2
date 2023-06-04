@@ -146,6 +146,7 @@ public class Tennis {
                 //if the tetromino tries to insert itself at a place that has a settled tetromino
                 
                 else if (field[tetrominoY][tetrominoX].getIsFull() == true && field[tetrominoY][tetrominoX].getActive() == false){
+                    if(mino.getIsFull())
                     field = prevField;
                     prevY--;
                     insert(tetromino, prevX, prevY);
@@ -214,7 +215,7 @@ public class Tennis {
             case 6:
                 return tetro = new Ztetro();
             default:
-                return tetro = new Otetro(); //so that the method can work
+                return tetro = new Otetro(); //so that the function can work
         }
     }
 

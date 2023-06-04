@@ -40,6 +40,17 @@ class UserInputThread extends Thread{
         tennis = t;
     }
 
+    public void inserter(){
+        if(tennis.insert(currentTetro, currentX, currentY)){
+            tennis.insert(currentTetro, currentX, currentY);
+        }
+        else{
+            currentTetro = tennis.getNewTet();
+            tennis.insert(currentTetro, 5, 0);
+        }
+        tennis.drawField();
+    }
+
     @Override
     public void run(){
         try{
@@ -54,40 +65,27 @@ class UserInputThread extends Thread{
                         case "a":
                             currentX--;
                             currentY = tennis.getPrevY();
-                            if(tennis.insert(currentTetro, currentX, currentY)){
-                                tennis.insert(currentTetro, currentX, currentY);
-                            }
-                            tennis.drawField();
+                            inserter();
                             break;
                         case "d":
                             currentX++;
                             currentY = tennis.getPrevY();
-                            if(tennis.insert(currentTetro, currentX, currentY)){
-                                tennis.insert(currentTetro, currentX, currentY);
-                            }
-                            tennis.drawField();
+                            inserter();
                             break;
                         case "s":
                             currentY = tennis.getPrevY();
                             currentY++;
-                            if(tennis.insert(currentTetro, currentX, currentY)){
-                                tennis.insert(currentTetro, currentX, currentY);
-                            }
-                            tennis.drawField();
+                            inserter();
                             break;
                         case "x":
                             currentY = tennis.HEIGHT;
-                            if(tennis.insert(currentTetro, currentX, currentY)){
-                                tennis.insert(currentTetro, currentX, currentY);
-                            }
-                            tennis.drawField();
+                            inserter();
                             break;
                         case "r":
                             currentTetro.rotate();
                             currentY = tennis.getPrevY();
                             currentX = tennis.getPrevX();
-                            tennis.insert(currentTetro, currentX, currentY);
-                            tennis.drawField();
+                            inserter();
                             break;
                         case "quit":
 
@@ -133,6 +131,17 @@ class UpdateTennisThread extends Thread{
         currentY = y;
     }
 
+    public void inserter(){
+        if(tennis.insert(currentTetro, currentX, currentY)){
+            tennis.insert(currentTetro, currentX, currentY);
+        }
+        else{
+            updateTetro(tennis.getNewTet());
+            tennis.insert(currentTetro, 5, 0);
+        }
+        tennis.drawField();
+    }
+
     @Override
     public void run(){
         try{
@@ -141,19 +150,9 @@ class UpdateTennisThread extends Thread{
                 synchronized(tennis){
                     updateX(tennis.getPrevX());
                     updateY(tennis.getPrevY());
+                    currentY++;
                     updateTetro(tennis.getPrevTetro());
-                    if (!tennis.insert(currentTetro, currentX, currentY)) {
-                        // handle if the tetromino cannot be inserted anymore (it reached the bottom or other tetrominos)
-                        // like getting a new random tetrominso and resetting currentX and currentY to initial values
-                        updateX(5);
-                        updateY(0);
-                        updateTetro(tennis.getNewTet());
-                        tennis.insert(currentTetro, currentX, currentY);
-                    }
-                    else{
-                        tennis.insert(currentTetro, currentX, (currentY+1));
-                        tennis.drawField();
-                    }
+                    inserter();
                 }
                 time = time-10;
             }

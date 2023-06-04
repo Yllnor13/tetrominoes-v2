@@ -105,14 +105,12 @@ public class Ztetro implements Tetromino{
 
     @Override
     public int getWidth() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWidth'");
+        return width;
     }
 
     @Override
     public int getHeight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeight'");
+        return height;
     }
     
 }
