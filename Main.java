@@ -6,6 +6,8 @@ public class Main {
     public static void main(String[] args){
         //shared objects
         Random random = new Random();
+        Tetromino currentTetro = new Itetro();
+        Tetromino currentTetro2 = new Otetro();
 
         Tetromino square = new Otetro();
         Tennis tennis = new Tennis();
