@@ -5,12 +5,8 @@ public class Main {
 
     public static void main(String[] args){
         //shared objects
-        Tetromino currentTetro = new Itetro();
-        Tetromino currentTetro2 = new Otetro();
 
-        Tetromino square = new Ttetro();
         Tennis tennis = new Tennis();
-        tennis.addPrevTetro(square);
 
         //thread 1
         UserInputThread uit = new UserInputThread(tennis);

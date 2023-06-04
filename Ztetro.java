@@ -63,7 +63,6 @@ public class Ztetro implements Tetromino{
             List<Minomino> layer1 = new ArrayList<>(width);
             List<Minomino> layer2 = new ArrayList<>(width);
                         
-            layer1.add(new Minomino(false));
             layer1.add(new Minomino(true));
             layer1.add(new Minomino(true));
 
