@@ -45,7 +45,6 @@ class UserInputThread extends Thread{
             currentX = 5 - (currentTetro.getWidth()/2);
             tennis.insert(currentTetro, currentX, 0);
         }
-        tennis.drawField();
     }
 
     @Override
@@ -85,7 +84,7 @@ class UserInputThread extends Thread{
                                     tennis.insert(currentTetro, 5, 0);
                                     break;
                                 }
-                                tennis.drawField();
+                                
                             }
                         case "r":
                             currentTetro.rotate();
@@ -148,7 +147,7 @@ class UpdateTennisThread extends Thread{
             updateTetro(tennis.getNewTet());
             tennis.insert(currentTetro, 5, 0);
         }
-        tennis.drawField();
+        
     }
 
     public void passTime(){

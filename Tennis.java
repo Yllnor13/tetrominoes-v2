@@ -166,6 +166,7 @@ public class Tennis {
                 tetrominoY++;
             }
             lineClear();
+            drawField();
             return true;
         }
     }
