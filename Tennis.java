@@ -58,6 +58,15 @@ public class Tennis {
         }
     }
 
+    public void wipe(){
+        for(Minomino[] minolist : field){
+            for(Minomino mino : minolist){
+                mino.erase();
+                mino.settle();
+            }
+        }
+    }
+
     public synchronized Boolean insert(Tetromino tetromino, int x, int y){
         //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
         prevField = field;
@@ -85,74 +94,80 @@ public class Tennis {
         //this part may need a rewrite cause I am not really doing anything with the minomino in the actual tetromino
         //I think?
         //rewrite above
-        for (List<Minomino> minoList : tetromino.returnTetro()) {
-            for (Minomino mino : minoList) {
-                if(mino.getIsFull()){
-                    //most important check, so that the method doesnt crash
+        if(y<0){
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    GAME OVER.\n\n\nIF YOU WISH TO START A NEW GAME, TYPE 'RESTART'");
+            return true;
+        }
+        else{
+            for (List<Minomino> minoList : tetromino.returnTetro()) {
+                for (Minomino mino : minoList) {
+                    if(mino.getIsFull()){
+                        //most important check, so that the method doesnt crash
 
-                    //if it tried to go out of bounds to the right or left
-                    if(prevX + tetromino.getWidth() > WIDTH){
-                        tetrominoX = WIDTH - tetromino.getWidth();
-                        insert(tetromino, tetrominoX, tetrominoY);
-                        return true;
-                    }
+                        //if it tried to go out of bounds to the right or left
+                        if(prevX + tetromino.getWidth() > WIDTH){
+                            tetrominoX = WIDTH - tetromino.getWidth();
+                            insert(tetromino, tetrominoX, tetrominoY);
+                            return true;
+                        }
 
-                    if(prevX < 0){
-                        tetrominoX = 0;
-                        insert(tetromino, tetrominoX, tetrominoY);
-                        return true;
-                    }
+                        if(prevX < 0){
+                            tetrominoX = 0;
+                            insert(tetromino, tetrominoX, tetrominoY);
+                            return true;
+                        }
 
-                    //if it goes below the field somehow
-                    if(prevY + tetromino.getHeight() > HEIGHT){
-                        tetrominoY = HEIGHT - tetromino.getHeight();
-                        insert(tetromino, tetrominoX, tetrominoY);
-                        for(Minomino[] minoList2 : field){
-                            for(Minomino mino2 : minoList2){
-                                if(mino2.getActive() == true){
-                                    mino2.settle();
+                        //if it goes below the field somehow
+                        if(prevY + tetromino.getHeight() > HEIGHT){
+                            tetrominoY = HEIGHT - tetromino.getHeight();
+                            insert(tetromino, tetrominoX, tetrominoY);
+                            for(Minomino[] minoList2 : field){
+                                for(Minomino mino2 : minoList2){
+                                    if(mino2.getActive() == true){
+                                        mino2.settle();
+                                    }
                                 }
                             }
+                            return false;
                         }
-                        return false;
-                    }
 
-                    //if the tetromino tries to insert itself at a place that has a settled tetromino
-                    
-                    else if (mino.getActive() && field[tetrominoY][tetrominoX].getIsFull() && !field[tetrominoY][tetrominoX].getActive()){
-                        field = prevField;
-                        prevY--;
-                        insert(tetromino, prevX, prevY);
-                        for(Minomino[] minoList2 : field){
-                            for(Minomino mino2 : minoList2){
-                                if(mino2.getActive() == true){
-                                    mino2.settle();
+                        //if the tetromino tries to insert itself at a place that has a settled tetromino
+                        
+                        else if (mino.getActive() && field[tetrominoY][tetrominoX].getIsFull() && !field[tetrominoY][tetrominoX].getActive()){
+                            field = prevField;
+                            prevY--;
+                            insert(tetromino, prevX, prevY);
+                            for(Minomino[] minoList2 : field){
+                                for(Minomino mino2 : minoList2){
+                                    if(mino2.getActive() == true){
+                                        mino2.settle();
+                                    }
                                 }
                             }
+                            return false;
                         }
-                        return false;
+                        
+                        //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
+                        else if(field[tetrominoY][tetrominoX].getIsFull() == false){
+                            if(mino.getIsFull()){
+                                field[tetrominoY][tetrominoX] = new Minomino(true);
+                            }
+                            else{
+                                //do nothing
+                            }
+                            tetrominoX++;
+                        }
                     }
-                    
-                    //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
-                    else if(field[tetrominoY][tetrominoX].getIsFull() == false){
-                        if(mino.getIsFull()){
-                            field[tetrominoY][tetrominoX] = new Minomino(true);
-                        }
-                        else{
-                            //do nothing
-                        }
+                    else{
                         tetrominoX++;
                     }
                 }
-                else{
-                    tetrominoX++;
-                }
+                tetrominoX = x;
+                tetrominoY++;
             }
-            tetrominoX = x;
-            tetrominoY++;
+            lineClear();
+            return true;
         }
-        lineClear();
-        return true;
     }
 
     public synchronized void drawField(){

@@ -42,7 +42,8 @@ class UserInputThread extends Thread{
         }
         else{
             currentTetro = tennis.getNewTet();
-            tennis.insert(currentTetro, 5, 0);
+            currentX = 5 - (currentTetro.getWidth()/2);
+            tennis.insert(currentTetro, currentX, 0);
         }
         tennis.drawField();
     }
@@ -78,14 +79,13 @@ class UserInputThread extends Thread{
                                 currentY = x;
                                 if(tennis.insert(currentTetro, currentX, currentY)){
                                     tennis.insert(currentTetro, currentX, currentY);
-                                    tennis.drawField();
                                 }
                                 else{
                                     currentTetro = tennis.getNewTet();
                                     tennis.insert(currentTetro, 5, 0);
-                                    tennis.drawField();
                                     break;
                                 }
+                                tennis.drawField();
                             }
                         case "r":
                             currentTetro.rotate();
@@ -93,8 +93,11 @@ class UserInputThread extends Thread{
                             currentX = tennis.getPrevX();
                             inserter();
                             break;
+                        case "restart":
+                            tennis.wipe();
+                            inserter();
                         case "quit":
-
+                            System.exit(0);
                         default:
                             // Handle unknown command or invalid input
                             System.out.println("Unknown command: " + userInput);
@@ -169,7 +172,7 @@ class UpdateTennisThread extends Thread{
             passTime();
             time = time-10;
         }
-        if (time >100){
+        while(true){
             passTime();
         }
     }
