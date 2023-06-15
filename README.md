@@ -11,10 +11,12 @@ all you need to do to run the game is to have java installed and to compile the 
 
 ### Controls
 
-    A,D: move the tetromino left to right
-    R: rotates the tetromino
-    S: pushes the tetromino one minomino down
-    X: pushes the tetromino all the way down
+    Remember to press "enter" after every command so that the changes apply. This limitation is due to how java reads userinputs
+
+    "A","D": move the tetromino left to right
+    "R": rotates the tetromino
+    "S": pushes the tetromino one minomino down
+    "X": pushes the tetromino all the way down
     "quit": quits the game
 
 ## Requierments (for the developer)
