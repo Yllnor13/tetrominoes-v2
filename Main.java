@@ -36,11 +36,11 @@ class UserInputThread extends Thread{
         tennis = t;
     }
 
-    public void inserter(){
-        if(tennis.insert(currentTetro, currentX, currentY)[0]){
+    public synchronized void inserter(){
+        if(tennis.insert(currentTetro, currentX, currentY) && !tennis.getGameOverState()){
             tennis.insert(currentTetro, currentX, currentY);
         }
-        else{
+        else if(!tennis.getGameOverState()){
             currentTetro = tennis.getNewTet();
             currentX = 5 - (currentTetro.getWidth()/2);
             tennis.insert(currentTetro, currentX, 0);
@@ -76,7 +76,7 @@ class UserInputThread extends Thread{
                         case "x":
                             for(int x = tennis.getPrevY(); x<tennis.HEIGHT;x++){
                                 currentY = x;
-                                if(tennis.insert(currentTetro, currentX, currentY)[0] && tennis.insert(currentTetro, currentX, currentY)[1]){
+                                if(tennis.insert(currentTetro, currentX, currentY)){
                                     tennis.insert(currentTetro, currentX, currentY);
                                 }
                                 else{
@@ -92,9 +92,15 @@ class UserInputThread extends Thread{
                             currentX = tennis.getPrevX();
                             inserter();
                             break;
+                        case "q":
+                            tennis.saveTetro(currentTetro);
+                            inserter();
+                            break;
                         case "restart":
                             tennis.wipe();
+                            tennis.changeGameState(true);
                             inserter();
+                            break;
                         case "quit":
                             System.exit(0);
                         default:
@@ -121,8 +127,7 @@ class UpdateTennisThread extends Thread{
     private int currentX;
     private int currentY;
     private Tetromino currentTetro;
-    public Boolean isprinted = false;
-    public Boolean firstround = true;
+    private Boolean isprinted = false;
 
     public UpdateTennisThread(Tennis ten){
         tennis = ten;
@@ -141,22 +146,22 @@ class UpdateTennisThread extends Thread{
         currentY = y;
     }
 
-    public void inserter(){
-        if(tennis.insert(currentTetro, currentX, currentY)[1] == false){
+    public synchronized void inserter(){
+        if(tennis.insert(currentTetro, currentX, currentY) && !tennis.getGameOverState()){//starten av spillet
+            tennis.insert(currentTetro, currentX, currentY);
+            isprinted = false;
+        }
+        else if (!tennis.getGameOverState()){
+            updateTetro(tennis.getNewTet());
+            updateX(5-(currentTetro.getWidth()/2));
+            tennis.insert(currentTetro, currentX, 0);
+        }
+        else{//slutten av spillet
             if(!isprinted){
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    GAME OVER.\n\n\nIF YOU WISH TO START A NEW GAME, TYPE 'RESTART'");
                 isprinted = true;
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    GAME OVER.\n\n\nIF YOU WISH TO START A NEW GAME, TYPE 'RESTART'");
             }
         }
-        else if(tennis.insert(currentTetro, currentX, currentY)[0]){
-            isprinted = false;
-            tennis.insert(currentTetro, currentX, currentY);
-        }
-        else{
-            updateTetro(tennis.getNewTet());
-            tennis.insert(currentTetro, 5, 0);
-        }
-        
     }
 
     public void passTime(){
@@ -168,8 +173,7 @@ class UpdateTennisThread extends Thread{
                 currentY++;
                 updateTetro(tennis.getPrevTetro());
                 inserter();
-                firstround = false;
-        }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -9,15 +9,20 @@ public class Tennis {
     public Minomino[][] field = new Minomino[HEIGHT][WIDTH];
     private Minomino[][] prevField;
 
-    private ArrayList<Minomino[][]> prevFields; //might not need
+    private Tetromino savedTetro;
+    private Minomino[][] savedtetrofield = new Minomino[4][4];
+    private String[] saved = new String[6];
+    private Tetromino[] next3tetro;
+    private Minomino[][] next3field = new Minomino[4][12];
+    private String[] next3 = new String[6];
 
+    private ArrayList<Minomino[][]> prevFields; //might not need
     private int prevX;
     private int prevY;
     private Tetromino prevTetro;
-    private Tetromino savedTetro;
-    private Boolean gameOverState = false; //experimental
-    private Boolean [] gameState = new Boolean[2];
-
+    private Boolean gameOver = false;
+    private int score = 0;
+    private int level = 1;
 
 
     public Tennis() {
@@ -27,6 +32,23 @@ public class Tennis {
                 field[i][j] = new Minomino(false); // false means empty
             }
         }
+
+        //make empty fields for next3 and saved
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                savedtetrofield[i][j] = new Minomino(false);
+            }
+        }
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 12; j++){
+                next3field[i][j] = new Minomino(false);
+            }
+        }
+
+        //make saved tetromino field in string form for printing
+        updateSaved();
+        updateNext3();
+
         prevTetro = getNewTet();
     }
 
@@ -35,6 +57,7 @@ public class Tennis {
         //then make everything above it go down one line
         //order should be: Line clear->line above goes down
         int i = 0;
+        int lineclears = 0;
         for(Minomino[] minoList : field){
             int j = 0;
             for(Minomino mino : minoList){
@@ -42,7 +65,8 @@ public class Tennis {
                     j++;
                 }
             }
-            if (j == minoList.length) {
+            if (j == minoList.length) { //if there are enough filled lines to fill up a row
+                lineclears++;
                 for (Minomino mino : minoList) {
                     mino.erase();
                 }
@@ -59,6 +83,15 @@ public class Tennis {
             }
             i++;
         }
+        if (lineclears == 1) { //had to use if else loops cause switch case statement made it add all points at the same time somehow
+            score += level * 40;
+        } else if (lineclears == 2) {
+            score += level * 100;
+        } else if (lineclears == 3) {
+            score += level * 300;
+        } else if (lineclears == 4) {
+            score += level * 1200;
+        }
     }
 
     public void wipe(){
@@ -68,10 +101,9 @@ public class Tennis {
                 mino.settle();
             }
         }
-        gameState[1] = true;
     }
 
-    public synchronized Boolean[] insert(Tetromino tetromino, int x, int y){
+    public synchronized Boolean insert(Tetromino tetromino, int x, int y){ //kunne ha gjort denne mer abstrakt slik at man kunne bruke den på savedmino og next3 mino
         //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
         prevField = field;
         prevTetro = tetromino;
@@ -99,9 +131,8 @@ public class Tennis {
         //I think?
         //rewrite above
         if(y<0){
-            gameState[0] = true;
-            gameState[1] = false;
-            return gameState;
+            gameOver = true;
+            return true;
         }
         else{
             for (List<Minomino> minoList : tetromino.returnTetro()) {
@@ -113,17 +144,13 @@ public class Tennis {
                         if(prevX + tetromino.getWidth() > WIDTH){
                             tetrominoX = WIDTH - tetromino.getWidth();
                             insert(tetromino, tetrominoX, tetrominoY);
-                            gameState[0] = true;
-                            gameState[1] = true;
-                            return gameState;
+                            return true;
                         }
 
                         if(prevX < 0){
                             tetrominoX = 0;
                             insert(tetromino, tetrominoX, tetrominoY);
-                            gameState[0] = true;
-                            gameState[1] = true;
-                            return gameState;
+                            return true;
                         }
 
                         //if it goes below the field somehow
@@ -137,9 +164,7 @@ public class Tennis {
                                     }
                                 }
                             }
-                            gameState[0] = false;
-                            gameState[1] = true;
-                            return gameState;
+                            return false;
                         }
 
                         //if the tetromino tries to insert itself at a place that has a settled tetromino
@@ -155,9 +180,7 @@ public class Tennis {
                                     }
                                 }
                             }
-                            gameState[0] = false;
-                            gameState[1] = true;
-                            return gameState;
+                            return false;
                         }
                         
                         //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
@@ -180,25 +203,38 @@ public class Tennis {
             }
             lineClear();
             drawField();
-            gameState[0] = true;
-            gameState[1] = true;
-            return gameState;
+            return true;
         }
+    }
+
+    private void insert(Minomino[][] m, Tetromino t){ //simpler version of the method above for saved and next3
+
     }
 
     public synchronized void drawField(){
         // Loop through each row of the field and print each Cube
-        
+
+        updateSaved();
+        updateNext3();
+
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         for (int i = 0; i < HEIGHT; i++) {
             System.out.print("<!");
             for (int j = 0; j < WIDTH; j++) {
                 System.out.print(field[i][j].getSymbol()); // print the Cube
             }
-            System.out.print("!>");
+            if(i >= 0 && i < 5){
+                System.out.print("!>        " + saved[i]);
+            }
+            else if(i > 7 && i < 12){
+                System.out.print("!>        " + next3[i-8]);
+            }
+            else{
+                System.out.print("!>");
+            }
             System.out.println(); // move to the next row
         }
-        System.out.print("<!====================!>");
+        System.out.print("<!====================!>          score = " + score + "\n");
     }
 
     //made most sense to have this here since tennis is synchronized in main for both user and computer thread
@@ -227,8 +263,8 @@ public class Tennis {
         }
     }
 
-    public synchronized void saveTetro(){
-        savedTetro = prevTetro;
+    public synchronized void saveTetro(Tetromino tetro){
+        savedTetro = tetro;
     }
 
     public synchronized Tetromino getSavedTetro(){
@@ -257,5 +293,40 @@ public class Tennis {
 
     public void addPrevTetro(Tetromino t) {
         prevTetro = t;
+    }
+
+    public Boolean getGameOverState(){
+        return gameOver;
+    }
+
+    public void changeGameState(Boolean b){
+        gameOver = b;
+    }
+
+    private void updateSaved(){
+        saved[0] = "<!SAVED===!>";
+        for (int i = 1; i < 4; i++){
+            String row = "<!";
+            for (int j = 0; j < 4; j++){
+                row += savedtetrofield[i][j].getSymbol();
+            }
+            row += "!>";
+            saved[i] = row;
+        }
+        saved[5] = "<!========!>";
+    }
+
+    private void updateNext3(){
+        //make saved tetromino field
+        next3[0] = "<!NEXT=TETROMINOES================!>";
+        for (int i = 1; i < 4; i++){
+            String row = "<!";
+            for (int j = 0; j < 12; j++){
+                row += next3field[i][j].getSymbol();
+            }
+            row += "!>";
+            next3[i] = row;
+        }
+        next3[5] = "<<!================================!>";
     }
 }

@@ -135,7 +135,7 @@ The user interface will use square brackets and dots in the place of blocks and 
     <!. . . [][][][][][][]!>
     <![][][][]. [][][][]. !>
     <![][][]. [][][][]. . !>
-    <!====================!>
+    <!====================!>        score: 87140
 
 
 # Why tetrominoes?
