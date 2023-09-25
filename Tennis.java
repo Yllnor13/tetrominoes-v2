@@ -15,6 +15,9 @@ public class Tennis {
     private int prevY;
     private Tetromino prevTetro;
     private Tetromino savedTetro;
+    private Boolean gameOverState = false; //experimental
+    private Boolean [] gameState = new Boolean[2];
+
 
 
     public Tennis() {
@@ -65,9 +68,10 @@ public class Tennis {
                 mino.settle();
             }
         }
+        gameState[1] = true;
     }
 
-    public synchronized Boolean insert(Tetromino tetromino, int x, int y){
+    public synchronized Boolean[] insert(Tetromino tetromino, int x, int y){
         //TODO: make a copy of the previous field, then check if the new insert makes the tetromino have 2 stay
         prevField = field;
         prevTetro = tetromino;
@@ -95,8 +99,9 @@ public class Tennis {
         //I think?
         //rewrite above
         if(y<0){
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    GAME OVER.\n\n\nIF YOU WISH TO START A NEW GAME, TYPE 'RESTART'");
-            return true;
+            gameState[0] = true;
+            gameState[1] = false;
+            return gameState;
         }
         else{
             for (List<Minomino> minoList : tetromino.returnTetro()) {
@@ -108,13 +113,17 @@ public class Tennis {
                         if(prevX + tetromino.getWidth() > WIDTH){
                             tetrominoX = WIDTH - tetromino.getWidth();
                             insert(tetromino, tetrominoX, tetrominoY);
-                            return true;
+                            gameState[0] = true;
+                            gameState[1] = true;
+                            return gameState;
                         }
 
                         if(prevX < 0){
                             tetrominoX = 0;
                             insert(tetromino, tetrominoX, tetrominoY);
-                            return true;
+                            gameState[0] = true;
+                            gameState[1] = true;
+                            return gameState;
                         }
 
                         //if it goes below the field somehow
@@ -128,7 +137,9 @@ public class Tennis {
                                     }
                                 }
                             }
-                            return false;
+                            gameState[0] = false;
+                            gameState[1] = true;
+                            return gameState;
                         }
 
                         //if the tetromino tries to insert itself at a place that has a settled tetromino
@@ -144,7 +155,9 @@ public class Tennis {
                                     }
                                 }
                             }
-                            return false;
+                            gameState[0] = false;
+                            gameState[1] = true;
+                            return gameState;
                         }
                         
                         //make it so that it gets the symbol but doesnt affect whatever is on the tetromino
@@ -167,7 +180,9 @@ public class Tennis {
             }
             lineClear();
             drawField();
-            return true;
+            gameState[0] = true;
+            gameState[1] = true;
+            return gameState;
         }
     }
 

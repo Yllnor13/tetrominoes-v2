@@ -37,7 +37,7 @@ class UserInputThread extends Thread{
     }
 
     public void inserter(){
-        if(tennis.insert(currentTetro, currentX, currentY)){
+        if(tennis.insert(currentTetro, currentX, currentY)[0]){
             tennis.insert(currentTetro, currentX, currentY);
         }
         else{
@@ -76,7 +76,7 @@ class UserInputThread extends Thread{
                         case "x":
                             for(int x = tennis.getPrevY(); x<tennis.HEIGHT;x++){
                                 currentY = x;
-                                if(tennis.insert(currentTetro, currentX, currentY)){
+                                if(tennis.insert(currentTetro, currentX, currentY)[0] && tennis.insert(currentTetro, currentX, currentY)[1]){
                                     tennis.insert(currentTetro, currentX, currentY);
                                 }
                                 else{
@@ -121,6 +121,8 @@ class UpdateTennisThread extends Thread{
     private int currentX;
     private int currentY;
     private Tetromino currentTetro;
+    public Boolean isprinted = false;
+    public Boolean firstround = true;
 
     public UpdateTennisThread(Tennis ten){
         tennis = ten;
@@ -140,7 +142,14 @@ class UpdateTennisThread extends Thread{
     }
 
     public void inserter(){
-        if(tennis.insert(currentTetro, currentX, currentY)){
+        if(tennis.insert(currentTetro, currentX, currentY)[1] == false){
+            if(!isprinted){
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    GAME OVER.\n\n\nIF YOU WISH TO START A NEW GAME, TYPE 'RESTART'");
+                isprinted = true;
+            }
+        }
+        else if(tennis.insert(currentTetro, currentX, currentY)[0]){
+            isprinted = false;
             tennis.insert(currentTetro, currentX, currentY);
         }
         else{
@@ -154,11 +163,12 @@ class UpdateTennisThread extends Thread{
         try{
             Thread.sleep(time);
             synchronized(tennis){
-            updateX(tennis.getPrevX());
-            updateY(tennis.getPrevY());
-            currentY++;
-            updateTetro(tennis.getPrevTetro());
-            inserter();
+                updateX(tennis.getPrevX());
+                updateY(tennis.getPrevY());
+                currentY++;
+                updateTetro(tennis.getPrevTetro());
+                inserter();
+                firstround = false;
         }
         } catch (InterruptedException e) {
             e.printStackTrace();
